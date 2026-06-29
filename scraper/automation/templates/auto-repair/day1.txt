@@ -1,0 +1,16 @@
+Subject: {{businessName}} — quick question
+
+Hi {{name}},
+
+Searched for auto repair in {{city}} today and came across {{businessName}} — {{reviews}} reviews, solid reputation.
+
+Noticed there's no website. When someone searches "auto repair near me" and finds you on Google but can't click through to a site, most of them move on to the next result. That's customers you're already earning but not capturing.
+
+I build websites specifically for auto repair shops — contact form, services list, hours, directions, all optimised for local Google search.
+
+No setup fee. ${{monthly}}/month. Takes about a week to go live.
+
+Worth a quick look? Happy to show you what it would look like for {{businessName}} at no commitment.
+
+{{senderName}}
+{{senderPhone}}

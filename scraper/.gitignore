@@ -1,0 +1,16 @@
+# Config with real credentials — never commit
+automation/config.js
+
+# Lead databases — local data, not source code
+projects/*/leads.json
+projects/*/leads.csv
+projects/*/latest.json
+
+# Client data
+reports/clients.json
+
+# Deployment logs
+logs/
+
+# Temp site builds
+/tmp/site-*
