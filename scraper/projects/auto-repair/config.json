@@ -1,0 +1,18 @@
+{
+  "name": "Auto Repair",
+  "slug": "auto-repair",
+  "keywords": [
+    "auto repair shop",
+    "car mechanic",
+    "auto mechanic",
+    "vehicle repair",
+    "auto service shop"
+  ],
+  "pitch": {
+    "avgJobValue": 500,
+    "painPoint": "When someone searches 'auto repair near me', your competitors show up and you don't.",
+    "retainerMonthly": 149,
+    "setupFee": 0
+  },
+  "notes": "Tech-averse owners. Lead with lost customers, not SEO jargon. Lowest web design competition of any trade."
+}

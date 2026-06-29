@@ -1,0 +1,18 @@
+{
+  "name": "Roofers",
+  "slug": "roofers",
+  "keywords": [
+    "roofing contractor",
+    "roof repair",
+    "roofing company",
+    "roof replacement",
+    "roofer"
+  ],
+  "pitch": {
+    "avgJobValue": 12000,
+    "painPoint": "A single job from your website pays for 2 years of the retainer. You're leaving that on the table every month.",
+    "retainerMonthly": 199,
+    "setupFee": 0
+  },
+  "notes": "High-ticket = easy ROI story. Owner-operators are cash-rich but time-poor. Lead with one job = 2 years paid."
+}
