@@ -18,7 +18,9 @@
  *   "hours":      "Mon–Fri 8am–6pm, Sat 9am–3pm",
  *   "tagline":    "Honest repairs, fair prices.",
  *   "colorPrimary": "#1a3c5e",
- *   "analyticsId": ""
+ *   "analyticsId": "",         // GA4 measurement ID, e.g. "G-XXXXXXX"
+ *   "gscVerification": "",     // Search Console HTML tag verification content
+ *   "email": ""                // Where the contact form sends leads
  * }
  */
 
@@ -63,13 +65,15 @@ function buildSite(client) {
     '{{SERVICES_LIST}}':   (client.services || []).map(s => `<li>${s}</li>`).join('\n'),
     '{{COLOR_PRIMARY}}':   client.colorPrimary || '#1a3c5e',
     '{{ANALYTICS_ID}}':    client.analyticsId || '',
+    '{{GSC_VERIFICATION}}': client.gscVerification || '',
+    '{{EMAIL}}':           client.email || '',
     '{{YEAR}}':            new Date().getFullYear().toString(),
     '{{DOMAIN}}':          client.domain || `${client.slug}.pages.dev`,
   };
 
   const files = getAllFiles(outDir);
   for (const file of files) {
-    if (!/\.(html|css|js|txt)$/.test(file)) continue;
+    if (!/\.(html|css|js|txt|xml)$/.test(file)) continue;
     let content = fs.readFileSync(file, 'utf8');
     for (const [k, v] of Object.entries(vars)) {
       content = content.replaceAll(k, v);
