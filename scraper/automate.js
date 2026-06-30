@@ -24,7 +24,7 @@
 'use strict';
 
 const { execSync, spawn } = require('child_process');
-const path   = require('fs');
+const path   = require('path');
 const fs     = require('fs');
 
 const { enrichBatch }                 = require('./automation/enricher');

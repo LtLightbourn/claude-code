@@ -16,7 +16,10 @@ const PROJECTS = ['auto-repair', 'roofers', 'electricians'];
 const args = process.argv.slice(2);
 const filterProject = args.includes('--project') ? args[args.indexOf('--project') + 1] : null;
 
-const OUTREACH_STAGES = ['new', 'emailed', 'called', 'replied', 'closed', 'not-interested'];
+const OUTREACH_STAGES = [
+  'new', 'emailed-d1', 'emailed-d4', 'emailed-d9', 'replied', 'closed',
+  'not-interested', 'phone-only', 'unsubscribed', 'below-quality-bar', 'no-contact',
+];
 
 function loadProject(slug) {
   const dir       = path.join(__dirname, 'projects', slug);

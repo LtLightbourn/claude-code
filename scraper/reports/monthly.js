@@ -199,9 +199,13 @@ async function fetchRankingMovement(siteUrl, keywords, token) {
       startDate: fmt(startDate),
       endDate:   fmt(endDate),
       dimensions: ['query'],
-      dimensionFilterGroups: [{
-        filters: keywords.map(k => ({ dimension: 'query', operator: 'equals', expression: k })),
-      }],
+      // One group per keyword — groups are OR'd together by the API, while
+      // filters within a single group are AND'd. Putting all keywords in one
+      // group would require "query equals A AND query equals B", which can
+      // never match anything.
+      dimensionFilterGroups: keywords.map(k => ({
+        filters: [{ dimension: 'query', operator: 'equals', expression: k }],
+      })),
     });
     const req = https.request({
       hostname: 'searchconsole.googleapis.com',
@@ -262,9 +266,9 @@ async function fetchCallStats(phoneNumber) {
   const auth = Buffer.from(`${cfg.twilio.accountSid}:${cfg.twilio.authToken}`).toString('base64');
   const qs = new URLSearchParams({
     To: phoneNumber,
-    StartTime: `>=${fmt(periodStart)}`,
-    EndTime:   `<=${fmt(periodEnd)}`,
-    PageSize:  '1000',
+    'StartTime>=': fmt(periodStart),
+    'EndTime<=':   fmt(periodEnd),
+    PageSize:      '1000',
   });
 
   return new Promise((resolve) => {

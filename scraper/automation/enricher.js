@@ -135,10 +135,12 @@ async function enrichLead(lead) {
 
   await sleep(300);
 
-  // Try guessing domain from business name, then Hunter
+  // Try guessing domain from business name, then Hunter — try each distinct
+  // candidate domain once (guessEmails returns multiple prefixes per domain,
+  // so dedupe to avoid querying the same domain twice).
   const guesses = guessEmails(lead.name, lead.location || '');
-  for (const guess of guesses.slice(0, 2)) {
-    const domain = guess.split('@')[1];
+  const domains = [...new Set(guesses.map(g => g.split('@')[1]))];
+  for (const domain of domains.slice(0, 2)) {
     const hunter = await hunterDomainSearch(domain);
     if (hunter?.email) {
       return { ...lead, email: hunter.email, emailSource: 'hunter', enrichStatus: 'enriched' };
