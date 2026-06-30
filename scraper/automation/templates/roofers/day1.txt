@@ -6,11 +6,9 @@ Found {{businessName}} while looking for roofers in {{city}} — {{reviews}} rev
 
 One thing jumped out: no website. The average roofing job in your area runs {{avgJob}}. A single job sourced through a website pays for two full years of the retainer. Right now that traffic is going to whoever shows up when someone searches "roofer {{city}}."
 
-I build sites for roofing contractors — before/after galleries, service breakdowns, coverage area, review integration. Designed to rank locally and convert to calls.
+I build and manage websites for roofing contractors — before/after galleries, service breakdowns, coverage area, review integration, plus a dedicated tracking number and a monthly report on what it's bringing in. ${{monthly}}/month, live within a week, nothing to pay upfront.
 
-No setup fee. ${{monthly}}/month. Live in a week.
-
-Happy to mock up what it would look like for {{businessName}} — no strings attached.
+Happy to put together a preview of what it would look like for {{businessName}}.
 
 {{senderName}}
 {{senderPhone}}

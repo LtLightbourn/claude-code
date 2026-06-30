@@ -6,9 +6,7 @@ Searched for an electrician in {{city}} today and found {{businessName}} — {{r
 
 One thing: no website. EV charger installs and smart home work are the fastest-growing electrical jobs right now, and customers search for those online before calling anyone. Without a site, that traffic goes to whoever does show up.
 
-I build websites for electricians — services, licensing info, service area, contact form. Set up to rank for local electrical searches.
-
-No setup fee. ${{monthly}}/month. Live in about a week.
+I build and manage websites for electricians — services, licensing info, service area, contact form, set up to rank for local electrical searches, plus a dedicated tracking number and a monthly report on what it's bringing in. ${{monthly}}/month, live in about a week, nothing to pay upfront.
 
 Want me to show you what it would look like for {{businessName}}?
 

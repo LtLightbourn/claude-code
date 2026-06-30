@@ -1,0 +1,21 @@
+{
+  "name": "Local Visibility Plan",
+  "price": 200,
+  "setupFee": 0,
+  "billing": "Monthly, no contract, cancel anytime",
+  "positioning": "Premium managed service — priced and worded as professional work done for them, never as a discount or DIY tool.",
+  "includes": [
+    "Custom mobile-first website (Home, Services, About, Service Area, Contact)",
+    "Hosting, SSL, backups, uptime monitoring",
+    "Dedicated tracking phone number — every call is visible and reportable",
+    "Google Business Profile — active management, weekly posts, review responses within 48 hours, Q&A monitoring",
+    "Local SEO fundamentals — schema markup, meta optimization, sitemap submission",
+    "Monthly update window — hours, photos, services changed on request",
+    "Monthly report — calls received, form submissions, visitors, ranking movement"
+  ],
+  "languageRules": {
+    "avoid": ["affordable", "cheap", "save money", "deal", "discount", "$X cheaper than [competitor]", "limited time"],
+    "use": ["professional", "managed for you", "done for you", "handled", "results", "we manage"],
+    "priceFraming": "State $200/month as the fair price for managed, professional work. Never compare it to a competitor's price. The $0 setup fee is framed as removing risk, not as a discount."
+  }
+}

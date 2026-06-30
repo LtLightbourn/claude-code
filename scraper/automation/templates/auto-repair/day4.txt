@@ -4,11 +4,11 @@ Hi {{name}},
 
 Following up on my note from a few days ago.
 
-Here's what a site I built for a shop similar to {{businessName}} did in the first 90 days: 3–5 new customers a month who found them through Google search and clicked straight to the contact form. At your rates that's a strong return on ${{monthly}}/month.
+Here's what a site I built for a shop similar to {{businessName}} did in the first 90 days: 3–5 new customers a month who found them through Google search and clicked straight to the contact form. At your rates, that's well clear of the ${{monthly}}/month it costs to have it managed.
 
-I only work with one auto repair shop per area to avoid conflict. There are two other shops in {{city}} I've reached out to — happy to hold the spot for {{businessName}} if you want to take a look first.
+I only take on one auto repair shop per area so the work I do stays focused. The {{city}} spot is still open.
 
-15-minute call? I can walk you through it.
+Worth 15 minutes? I can walk you through exactly what you'd get.
 
 {{senderName}}
 {{senderPhone}}

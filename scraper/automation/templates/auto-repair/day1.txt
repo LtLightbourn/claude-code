@@ -4,13 +4,11 @@ Hi {{name}},
 
 Searched for auto repair in {{city}} today and came across {{businessName}} — {{reviews}} reviews, solid reputation.
 
-Noticed there's no website. When someone searches "auto repair near me" and finds you on Google but can't click through to a site, most of them move on to the next result. That's customers you're already earning but not capturing.
+Noticed there's no website. When someone searches "auto repair near me" and finds you on Google but can't click through to a site, most of them call the next shop instead. That's business you've already earned but aren't capturing.
 
-I build websites specifically for auto repair shops — contact form, services list, hours, directions, all optimised for local Google search.
+I build and manage websites for auto repair shops — a real site, a dedicated phone number so every call from it is tracked, active management of your Google Business listing, and a monthly report showing exactly how many calls and visitors it brought in. ${{monthly}}/month, no contract.
 
-No setup fee. ${{monthly}}/month. Takes about a week to go live.
-
-Worth a quick look? Happy to show you what it would look like for {{businessName}} at no commitment.
+Want me to put together a preview of what it would look like for {{businessName}}? No commitment either way.
 
 {{senderName}}
 {{senderPhone}}
