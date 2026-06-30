@@ -71,9 +71,19 @@ module.exports = {
 
   // ── Google APIs ───────────────────────────────────────────────────────────
   google: {
-    placesApiKey:     process.env.GOOGLE_API_KEY || '',
-    // Service account JSON for Google Analytics reporting (optional)
-    analyticsKeyFile: '',
+    placesApiKey: process.env.GOOGLE_API_KEY || '',
+    // Service account JSON, used for both Analytics (GA4) and Search Console
+    // reporting. Add the service account email as a Viewer/Restricted user on
+    // each client's GA4 property and Search Console site.
+    serviceAccountKeyFile: '',
+  },
+
+  // ── Call tracking (Twilio) ─────────────────────────────────────────────────
+  // Powers the "calls received" line in the monthly report. Each client gets
+  // their own Twilio number (~$1/mo) forwarded to their real line.
+  twilio: {
+    accountSid: '',
+    authToken:  '',
   },
 
   // ── Sequence timing ────────────────────────────────────────────────────────
