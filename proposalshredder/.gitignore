@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+.proposalshredder/
+samples/sample_rfp.pdf
+samples/capability_library/
+samples/output/
+output/
