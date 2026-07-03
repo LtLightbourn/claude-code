@@ -29,6 +29,19 @@ module.exports = {
     },
   },
 
+  // IMAP for the same mailbox — the inbox watcher scans it for replies and
+  // unsubscribes so sequences stop the moment someone responds.
+  // Leave host/user empty to disable (replies then need manual mark.js).
+  imap: {
+    host:   '',    // e.g. imap.zoho.com, imap.gmail.com, outlook.office365.com
+    port:   993,
+    secure: true,
+    auth: {
+      user: '',    // same account as smtp.auth.user
+      pass: '',
+    },
+  },
+
   // Daily send cap per project (stay under spam thresholds)
   emailLimits: {
     perProjectPerDay: 30,   // Max new Day-1 emails per project per day

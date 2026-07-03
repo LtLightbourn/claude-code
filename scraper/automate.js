@@ -2,6 +2,7 @@
  * Master automation runner. Run this daily via cron.
  *
  * What it does in order:
+ *   0. Check inbox for replies/unsubscribes (stops sequences for responders)
  *   1. Scrape new leads (rotates through configured cities)
  *   2. Enrich new leads (find emails via Hunter/Apollo)
  *   3. Process email sequences (Day 1 / Day 4 / Day 9)
@@ -29,6 +30,7 @@ const fs     = require('fs');
 
 const { enrichBatch }                 = require('./automation/enricher');
 const { sendBatch }                   = require('./automation/emailer');
+const { checkInbox }                  = require('./automation/inbox');
 const { buildQueue, markSent, saveLeads, loadLeads } = require('./automation/sequences');
 
 let cfg;
@@ -57,6 +59,20 @@ function todaysLocation(projectSlug) {
   const locations = cfg.locations?.[projectSlug] || ['Austin, TX'];
   const dayOfYear = Math.floor((Date.now() - new Date(new Date().getFullYear(), 0, 0)) / 86_400_000);
   return locations[dayOfYear % locations.length];
+}
+
+// ── Step 0: Inbox (replies must be processed BEFORE sending follow-ups) ───────
+async function runInboxCheck() {
+  log('─── STEP 0: Checking inbox for replies ───');
+  try {
+    await checkInbox({ dryRun: DRY_RUN, log: (...a) => log(...a) });
+  } catch (err) {
+    // A mail outage shouldn't kill the whole run — but DO skip sending, since
+    // unprocessed replies mean we can't trust the sequence states today.
+    log(`  Inbox check failed (${err.message}) — skipping email sends this run.`);
+    return false;
+  }
+  return true;
 }
 
 // ── Step 1: Scrape ────────────────────────────────────────────────────────────
@@ -200,9 +216,10 @@ function printSummary() {
   log(`════ Automation run started ${DRY_RUN ? '[DRY RUN] ' : ''}════`);
 
   try {
+    const inboxOk = await runInboxCheck();
     if (!SKIP_SCRAPE) await runScrape();
     await runEnrichment();
-    if (!SKIP_EMAIL) {
+    if (!SKIP_EMAIL && inboxOk) {
       const emailSummary = await runSequences();
       log(`\nEmails: ${emailSummary.sent} sent, ${emailSummary.errors} errors`);
     }

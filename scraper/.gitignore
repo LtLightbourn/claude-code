@@ -8,6 +8,11 @@ projects/*/latest.json
 
 # Client data
 reports/clients.json
+clients/
+
+# Dependencies
+node_modules/
+package-lock.json
 
 # Deployment logs
 logs/

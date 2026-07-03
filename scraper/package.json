@@ -1,0 +1,20 @@
+{
+  "name": "lead-scraper",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Lead generation and outreach pipeline: scrape Google Places for businesses without websites, enrich, email sequences, deploy client sites, monthly reports.",
+  "scripts": {
+    "scrape": "node run-all.js",
+    "status": "node status.js",
+    "automate": "node automate.js",
+    "dry-run": "node automate.js --dry-run",
+    "inbox": "node automation/inbox.js",
+    "report": "node reports/monthly.js"
+  },
+  "dependencies": {
+    "imapflow": "^1.0.164",
+    "jsonwebtoken": "^9.0.2",
+    "mailparser": "^3.7.1",
+    "nodemailer": "^6.9.16"
+  }
+}
