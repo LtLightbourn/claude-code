@@ -14,5 +14,18 @@
     "retainerMonthly": 200,
     "setupFee": 0
   },
+  "site": {
+    "schemaType": "RoofingContractor",
+    "color": "#7a2e2e",
+    "keyword": "roofing contractor",
+    "services": [
+      "Roof Replacement",
+      "Roof Repair",
+      "Storm Damage Repair",
+      "Free Inspections",
+      "Gutter Installation",
+      "Insurance Claims Help"
+    ]
+  },
   "notes": "High-ticket = easy ROI story. Owner-operators are cash-rich but time-poor. Lead with one job = 2 years paid."
 }

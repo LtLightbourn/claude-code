@@ -4,7 +4,7 @@ Hi {{name}},
 
 Found {{businessName}} while looking for roofers in {{city}} — {{reviews}} reviews, good reputation.
 
-One thing jumped out: no website. The average roofing job in your area runs {{avgJob}}. A single job sourced through a website pays for two full years of the retainer. Right now that traffic is going to whoever shows up when someone searches "roofer {{city}}."
+One thing jumped out: no website. The average roofing job in your area runs ${{avgJob}}. A single job sourced through a website pays for two full years of the retainer. Right now that traffic is going to whoever shows up when someone searches "roofer {{city}}."
 
 I build and manage websites for roofing contractors — before/after galleries, service breakdowns, coverage area, review integration, plus a dedicated tracking number and a monthly report on what it's bringing in. ${{monthly}}/month, live within a week, nothing to pay upfront.
 

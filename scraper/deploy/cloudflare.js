@@ -42,20 +42,32 @@ function getArg(flag, def) {
 
 // ── Build site HTML from template ─────────────────────────────────────────────
 function buildSite(client) {
-  const templateDir = path.join(__dirname, '..', '..', 'templates', client.project);
-  const outDir      = path.join('/tmp', `site-${client.slug}`);
+  // Niche-specific template if one exists, otherwise the generic one —
+  // any industry can be deployed without designing a new template first
+  let templateDir = path.join(__dirname, '..', '..', 'templates', client.project);
+  if (!fs.existsSync(templateDir)) {
+    templateDir = path.join(__dirname, '..', '..', 'templates', 'generic');
+  }
+  const outDir = path.join('/tmp', `site-${client.slug}`);
 
   if (!fs.existsSync(templateDir)) {
-    throw new Error(`No template found for project "${client.project}" at ${templateDir}`);
+    throw new Error(`No template for project "${client.project}" and no generic fallback at ${templateDir}`);
   }
 
   // Copy template to temp dir
   if (fs.existsSync(outDir)) execSync(`rm -rf "${outDir}"`);
   execSync(`cp -r "${templateDir}" "${outDir}"`);
 
+  // Human-readable niche label for titles/meta, e.g. "tree-services" → "Tree Services"
+  const nicheLabel = client.nicheLabel
+    || (client.project || 'local services').replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+
   // Replace placeholders in all HTML/CSS/JS files
   const vars = {
     '{{BUSINESS_NAME}}':   client.name,
+    '{{SCHEMA_TYPE}}':     client.schemaType || 'LocalBusiness',
+    '{{NICHE_LABEL}}':     nicheLabel,
+    '{{NICHE_LABEL_LOWER}}': nicheLabel.toLowerCase(),
     '{{PHONE}}':           client.phone || '',
     '{{ADDRESS}}':         client.address || '',
     '{{CITY}}':            client.city || '',

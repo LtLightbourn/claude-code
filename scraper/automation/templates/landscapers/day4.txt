@@ -1,0 +1,13 @@
+Subject: Re: {{businessName}} — landscaping site
+
+Hi {{name}},
+
+Quick follow-up. Two things make a website work especially hard for landscapers: projects are visual (the gallery does the selling for you), and maintenance contracts recur — one new weekly-mow customer found through search keeps paying every month after.
+
+Against that, it's ${{monthly}}/month to have the whole thing built and managed — site, photos updated, Google Business Profile handled, and a monthly report showing the calls and requests it generated.
+
+I take on one landscaper per area so I'm never competing with my own work. The {{city}} spot is open if you want it.
+
+{{senderName}}
+{{senderPhone}}
+{{calendly}}

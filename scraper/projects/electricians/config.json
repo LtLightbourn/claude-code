@@ -14,5 +14,18 @@
     "retainerMonthly": 200,
     "setupFee": 0
   },
+  "site": {
+    "schemaType": "Electrician",
+    "color": "#8a6d1d",
+    "keyword": "electrician",
+    "services": [
+      "Panel Upgrades",
+      "Wiring & Rewiring",
+      "EV Charger Installation",
+      "Lighting Installation",
+      "Emergency Service",
+      "Safety Inspections"
+    ]
+  },
   "notes": "Largest addressable market (257K businesses). Lead with EV charger / smart home angle — that's the growth driver they know about. Year-round demand."
 }

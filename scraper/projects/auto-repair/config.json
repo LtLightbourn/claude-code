@@ -14,5 +14,18 @@
     "retainerMonthly": 200,
     "setupFee": 0
   },
+  "site": {
+    "schemaType": "AutoRepair",
+    "color": "#1a3c5e",
+    "keyword": "auto repair",
+    "services": [
+      "Oil Changes",
+      "Brake Repair",
+      "Engine Diagnostics",
+      "Transmission Service",
+      "AC Repair",
+      "State Inspections"
+    ]
+  },
   "notes": "Tech-averse owners. Lead with lost customers, not SEO jargon. Lowest web design competition of any trade."
 }

@@ -1,0 +1,31 @@
+{
+  "name": "HVAC",
+  "slug": "hvac",
+  "keywords": [
+    "hvac contractor",
+    "air conditioning repair",
+    "ac repair",
+    "heating and cooling",
+    "furnace repair"
+  ],
+  "pitch": {
+    "avgJobValue": 6500,
+    "painPoint": "When the AC dies in July, homeowners search 'ac repair near me' — without a website, that call goes to a competitor.",
+    "retainerMonthly": 200,
+    "setupFee": 0
+  },
+  "site": {
+    "schemaType": "HVACBusiness",
+    "color": "#a84f1d",
+    "keyword": "ac repair",
+    "services": [
+      "AC Repair",
+      "AC Installation & Replacement",
+      "Furnace Repair",
+      "Heating Installation",
+      "Duct Cleaning",
+      "Seasonal Tune-Ups"
+    ]
+  },
+  "notes": "Seasonal urgency spikes (summer AC, winter heat). System replacements run $5K–$10K, so one website-sourced install covers years of the retainer."
+}

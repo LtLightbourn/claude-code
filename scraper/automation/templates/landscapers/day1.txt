@@ -1,0 +1,14 @@
+Subject: {{businessName}} — Google search question
+
+Hi {{name}},
+
+Found {{businessName}} while looking at landscapers in {{city}} — {{reviews}} reviews, clearly doing good work.
+
+One thing stood out: no website. Landscaping is hired off photos — homeowners planning a ${{avgJob}} project compare portfolios before they ever call. No website means your best work is invisible to everyone who hasn't already driven past it.
+
+I build and manage websites for landscaping companies — a proper project gallery, services, service area, review integration, plus a dedicated tracking number and a monthly report on exactly what it brought in. ${{monthly}}/month, live within a week, nothing to pay upfront.
+
+Happy to put together a preview of what it would look like for {{businessName}}.
+
+{{senderName}}
+{{senderPhone}}

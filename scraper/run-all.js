@@ -1,18 +1,20 @@
 /**
- * Runs all 3 project scrapers in parallel for a given location.
+ * Runs every project's scraper in parallel for a given location.
  *
  * Usage:
  *   node scraper/run-all.js --location "Austin, TX"
  *   node scraper/run-all.js --location "Denver, CO" --radius 8000
+ *   node scraper/run-all.js --location "Austin, TX" --projects "plumbers|hvac"
  *
  * Env:
  *   GOOGLE_API_KEY  — required
  *
  * What it does:
- *   - Spawns scrape.js for auto-repair, roofers, and electricians simultaneously
+ *   - Spawns scrape.js for every industry under projects/ simultaneously
+ *     (or the subset passed via --projects, pipe-separated)
  *   - Streams each project's output prefixed with its name
- *   - Prints a combined summary when all 3 finish
- *   - Repeats across as many --location values as you pass (comma-separated)
+ *   - Prints a combined summary when all finish
+ *   - Repeats across as many --location values as you pass (pipe-separated)
  */
 
 'use strict';
@@ -21,7 +23,7 @@ const { spawn }  = require('child_process');
 const path       = require('path');
 const fs         = require('fs');
 
-const PROJECTS = ['auto-repair', 'roofers', 'electricians'];
+const { listProjects } = require('./automation/projects');
 
 const args = process.argv.slice(2);
 function getArg(flag, def) {
@@ -33,8 +35,15 @@ const LOCATIONS_RAW = getArg('--location', 'Austin, TX');
 const LOCATIONS     = LOCATIONS_RAW.split('|').map(l => l.trim()); // pipe-separated for multiple
 const RADIUS        = getArg('--radius', '6000');
 
+const PROJECTS_RAW  = getArg('--projects', null);
+const PROJECTS      = PROJECTS_RAW
+  ? PROJECTS_RAW.split('|').map(p => p.trim()).filter(p => listProjects().includes(p))
+  : listProjects();
+
 const SCRAPER = path.join(__dirname, 'scrape.js');
-const COLORS  = { 'auto-repair': '\x1b[33m', roofers: '\x1b[34m', electricians: '\x1b[32m' };
+// Rotating color palette — projects are discovered, so assign by index
+const PALETTE = ['\x1b[33m', '\x1b[34m', '\x1b[32m', '\x1b[35m', '\x1b[36m', '\x1b[31m', '\x1b[93m', '\x1b[94m'];
+const COLORS  = Object.fromEntries(PROJECTS.map((p, i) => [p, PALETTE[i % PALETTE.length]]));
 const RESET   = '\x1b[0m';
 
 function runScraper(project, location) {
@@ -89,7 +98,7 @@ function runScraper(project, location) {
 
   for (const location of LOCATIONS) {
     console.log(`\n${'═'.repeat(70)}`);
-    console.log(`  Scraping all 3 projects for: ${location}`);
+    console.log(`  Scraping ${PROJECTS.length} projects for: ${location}`);
     console.log(`${'═'.repeat(70)}\n`);
 
     const results = await Promise.all(

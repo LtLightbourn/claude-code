@@ -42,9 +42,11 @@ module.exports = {
     },
   },
 
-  // Daily send cap per project (stay under spam thresholds)
+  // Daily send caps (stay under spam thresholds). One mailbox sends for every
+  // industry, so the global cap is what actually protects deliverability.
   emailLimits: {
-    perProjectPerDay: 30,   // Max new Day-1 emails per project per day
+    perProjectPerDay: 30,   // Max emails per project per day
+    totalPerDay:      60,   // Hard cap across ALL projects combined
     delayBetweenMs:   4000, // 4s between sends (avoid burst flags)
   },
 
@@ -64,11 +66,11 @@ module.exports = {
   },
 
   // ── Scraping schedule ─────────────────────────────────────────────────────
-  // Cities to scrape each week, per project
+  // Cities the daily automation rotates through. `default` covers every
+  // project; add a project slug as a key to give one industry its own list.
   locations: {
-    'auto-repair':   ['Austin, TX', 'Round Rock, TX', 'Cedar Park, TX', 'Kyle, TX'],
-    'roofers':       ['Austin, TX', 'Round Rock, TX', 'Cedar Park, TX', 'Kyle, TX'],
-    'electricians':  ['Austin, TX', 'Round Rock, TX', 'Cedar Park, TX', 'Kyle, TX'],
+    default: ['Austin, TX', 'Round Rock, TX', 'Cedar Park, TX', 'Kyle, TX'],
+    // 'roofers': ['Dallas, TX', 'Fort Worth, TX'],
   },
 
   scrape: {

@@ -1,0 +1,13 @@
+Subject: Re: {{businessName}} — painting site
+
+Hi {{name}},
+
+Quick follow-up. Painting is a trust purchase — the estimate visit only happens after someone has decided you look legitimate. That decision gets made online, comparing reviews and finished work, before you ever hear about the job.
+
+One ${{avgJob}} repaint sourced through the website carries the ${{monthly}}/month management for over a year. The before/after gallery does most of the selling on its own.
+
+I take on one painting contractor per area so I'm never competing with my own work. The {{city}} spot is open if you want it.
+
+{{senderName}}
+{{senderPhone}}
+{{calendly}}

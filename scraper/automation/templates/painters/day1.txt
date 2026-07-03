@@ -1,0 +1,14 @@
+Subject: {{businessName}} — Google search question
+
+Hi {{name}},
+
+Found {{businessName}} while looking at painting contractors in {{city}} — {{reviews}} reviews, good reputation.
+
+One thing stood out: no website. A whole-house repaint is a ${{avgJob}} decision, and it means letting a crew into the house for days — homeowners research that choice carefully online first. No website usually reads as no track record, even when the work is excellent.
+
+I build and manage websites for painters — before/after galleries, services, service area, review integration, plus a dedicated tracking number and a monthly report on exactly what it brought in. ${{monthly}}/month, live within a week, nothing to pay upfront.
+
+Happy to put together a preview of what it would look like for {{businessName}}.
+
+{{senderName}}
+{{senderPhone}}

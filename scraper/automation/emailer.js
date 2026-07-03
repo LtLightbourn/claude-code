@@ -96,8 +96,9 @@ function buildVars(lead, projectConfig) {
     reviews:      lead.reviews || 'several',
     phone:        lead.phone || '',
     address:      lead.address || '',
-    avgJob:       `$${projectConfig.pitch.avgJobValue.toLocaleString()}`,
-    monthly:      `$${projectConfig.pitch.retainerMonthly}`,
+    // Plain numbers — templates write the $ themselves ("${{monthly}}/month")
+    avgJob:       projectConfig.pitch.avgJobValue.toLocaleString(),
+    monthly:      String(projectConfig.pitch.retainerMonthly),
     senderName:   cfg.sender.name,
     senderPhone:  cfg.sender.phone,
     senderEmail:  cfg.sender.email,

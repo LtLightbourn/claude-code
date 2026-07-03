@@ -31,6 +31,7 @@ const fs     = require('fs');
 const { enrichBatch }                 = require('./automation/enricher');
 const { sendBatch }                   = require('./automation/emailer');
 const { checkInbox }                  = require('./automation/inbox');
+const { listProjects, hasEmailTemplates } = require('./automation/projects');
 const { buildQueue, markSent, saveLeads, loadLeads } = require('./automation/sequences');
 
 let cfg;
@@ -43,7 +44,8 @@ const SKIP_SCRAPE = argv.includes('--skip-scrape');
 const SKIP_EMAIL  = argv.includes('--skip-email');
 const FILTER_PROJECT = argv.includes('--project') ? argv[argv.indexOf('--project') + 1] : null;
 
-const PROJECTS = ['auto-repair', 'roofers', 'electricians']
+// Every directory under projects/ with a config.json is an active industry
+const PROJECTS = listProjects()
   .filter(p => !FILTER_PROJECT || p === FILTER_PROJECT);
 
 // ── Logging ───────────────────────────────────────────────────────────────────
@@ -56,7 +58,7 @@ const log = (...args) => console.log(`[${timestamp()}]`, ...args);
 // ── Location rotation ─────────────────────────────────────────────────────────
 // Cycle through configured cities deterministically based on day of year
 function todaysLocation(projectSlug) {
-  const locations = cfg.locations?.[projectSlug] || ['Austin, TX'];
+  const locations = cfg.locations?.[projectSlug] || cfg.locations?.default || ['Austin, TX'];
   const dayOfYear = Math.floor((Date.now() - new Date(new Date().getFullYear(), 0, 0)) / 86_400_000);
   return locations[dayOfYear % locations.length];
 }
@@ -139,11 +141,26 @@ async function runSequences() {
 
   const summary = { sent: 0, skipped: 0, errors: 0 };
 
+  // Global cap across ALL projects — one mailbox sends everything, and with
+  // many industries the per-project caps alone would sum past what a single
+  // sender can safely do in a day.
+  let remaining = cfg.emailLimits?.totalPerDay ?? 60;
+
   for (const project of PROJECTS) {
+    if (!hasEmailTemplates(project)) {
+      log(`  [${project}] No email templates in automation/templates/${project}/ — skipping sends`);
+      continue;
+    }
+
     const cfgPath = require('path').join(__dirname, 'projects', project, 'config.json');
     const projectConfig = JSON.parse(fs.readFileSync(cfgPath, 'utf8'));
     const leads = loadLeads(project);
-    const queue = buildQueue(leads, project, projectConfig);
+    let queue = buildQueue(leads, project, projectConfig);
+
+    if (queue.length > remaining) {
+      log(`  [${project}] Daily total cap: sending ${remaining} of ${queue.length} queued`);
+      queue = queue.slice(0, remaining);
+    }
 
     if (queue.length === 0) {
       log(`  [${project}] Nothing to send today`);
@@ -163,6 +180,7 @@ async function runSequences() {
       onSent: (job, result) => {
         log(`  [${project}] ✓ Day ${job.day} → ${job.lead.name} (${job.lead.email})`);
         summary.sent++;
+        remaining--;
 
         // Update lead status in memory
         const idx = leads.findIndex(l => l.placeId === job.lead.placeId);

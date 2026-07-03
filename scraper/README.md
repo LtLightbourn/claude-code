@@ -5,13 +5,20 @@ Google Maps with **no website**, cold-emails them a done-for-you website offer
 ($200/month, nothing upfront), deploys their site to Cloudflare Pages when they
 close, and emails them a monthly performance report.
 
-Three niches run in parallel, each with its own lead database and email copy:
+Industries run in parallel, each with its own lead database, pitch, and email
+copy. Projects are discovered from `projects/` — every directory with a
+`config.json` is live, no code changes needed to add one.
 
-| Slug | Niche | Why |
-|------|-------|-----|
+| Slug | Niche | Angle |
+|------|-------|-------|
 | `auto-repair` | Auto repair shops | Lowest web design competition, highest website gap |
 | `roofers` | Roofing contractors | Highest ticket value ($12K avg job = easy ROI pitch) |
 | `electricians` | Electricians | Largest market (257K businesses), year-round demand |
+| `plumbers` | Plumbers | Highest-urgency searches — emergencies convert instantly |
+| `hvac` | HVAC contractors | $6.5K replacements; seasonal demand spikes |
+| `landscapers` | Landscapers | Visual trade — the portfolio does the selling |
+| `painters` | Painting contractors | $3.5K trust purchase, researched online first |
+| `tree-services` | Tree services | Storm-driven spikes; insurance/credibility signal |
 
 ## The pipeline
 
@@ -56,9 +63,22 @@ Fill in `automation/config.js` (gitignored — keys never leave your machine):
 
 ---
 
-## Daily operation
+## Running automatically
 
-One command does everything — run it manually or via cron:
+Install the cron jobs once and the pipeline runs itself — daily scraping,
+enrichment, and sequences; monthly client reports:
+
+```bash
+bash scraper/setup-cron.sh             # daily 9am + monthly reports
+bash scraper/setup-cron.sh --hour 7    # different hour
+bash scraper/setup-cron.sh --remove    # uninstall
+```
+
+Each daily run rotates through the cities in `config.js` → `locations`
+(one city per project per day), so the database grows across your whole
+region automatically. Logs land in `scraper/logs/`.
+
+Or run it manually:
 
 ```bash
 node scraper/automate.js              # inbox check → scrape → enrich → send sequences
@@ -67,16 +87,10 @@ node scraper/automate.js --skip-scrape
 node scraper/automate.js --project roofers
 ```
 
-Cron:
-
-```cron
-0 9 * * *  cd /path/to/claude-code && node scraper/automate.js >> scraper/logs/automate.log 2>&1
-0 9 1 * *  cd /path/to/claude-code && node scraper/reports/monthly.js >> scraper/logs/reports.log 2>&1
-```
-
 Safety rails built in:
 
-- Max **30 Day-1 emails per project per day**, 4–5s between sends
+- Max **30 emails per project per day** and a **global cap of 60/day**
+  across all industries (one mailbox sends everything), 4–5s between sends
 - Replies and unsubscribes processed **before** any sending; if the inbox
   check fails, that run sends nothing
 - Every email carries a reply-to-unsubscribe footer, honored automatically
@@ -113,7 +127,34 @@ node scraper/deploy/cloudflare.js --client scraper/clients/bobs-auto-repair.json
 
 Site templates live in `templates/<project>/` — mobile-first single-pagers
 with LocalBusiness JSON-LD, GA4 events on the contact form, and `{{VAR}}`
-placeholders filled at deploy time.
+placeholders filled at deploy time. Industries without their own template
+deploy from `templates/generic/`, which takes its schema type, services,
+and colors from the project's config.
+
+## Adding an industry
+
+One config file makes a new industry fully live — scraped daily, enriched,
+and included in the dashboard:
+
+```bash
+mkdir scraper/projects/locksmiths
+# create scraper/projects/locksmiths/config.json — copy an existing one and
+# change: name, slug, keywords (Places searches), pitch (avgJobValue,
+# painPoint), and site (schemaType, color, keyword, services)
+```
+
+To also **email** those leads, write the sequence copy (till then the
+project is scraped but skipped by the emailer):
+
+```
+scraper/automation/templates/locksmiths/day1.txt
+scraper/automation/templates/locksmiths/day4.txt
+scraper/automation/templates/locksmiths/day9.txt
+```
+
+Copy an existing niche's templates and adapt the pitch. Deployment works
+immediately via the generic site template; add `templates/locksmiths/` only
+if the niche deserves bespoke design.
 
 ## Monthly reports
 
@@ -132,7 +173,7 @@ not yet connected shows "(not yet connected)" instead of breaking the report.
 ## Scraping on demand
 
 ```bash
-node scraper/run-all.js --location "Austin, TX"                       # all 3 niches
+node scraper/run-all.js --location "Austin, TX"                       # every industry
 node scraper/run-all.js --location "Austin, TX|Denver, CO"            # multiple cities
 node scraper/scrape.js --project roofers --location "Denver, CO" --radius 8000
 ```
@@ -146,7 +187,7 @@ node scraper/scrape.js --project roofers --location "Denver, CO" --radius 8000
 scraper/
 ├── automate.js               # Daily runner (cron this)
 ├── scrape.js                 # Per-project Places scraper
-├── run-all.js                # All 3 projects in parallel
+├── run-all.js                # Every project in parallel
 ├── status.js                 # Pipeline dashboard
 ├── mark.js                   # Manual lead status updates
 ├── onboard.js                # Closed lead → client setup

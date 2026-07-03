@@ -1,0 +1,30 @@
+{
+  "name": "Painters",
+  "slug": "painters",
+  "keywords": [
+    "painting contractor",
+    "house painter",
+    "interior painting",
+    "exterior painting"
+  ],
+  "pitch": {
+    "avgJobValue": 3500,
+    "painPoint": "A whole-house repaint is a $3,000+ decision — homeowners research online first, and no website reads as no track record.",
+    "retainerMonthly": 200,
+    "setupFee": 0
+  },
+  "site": {
+    "schemaType": "HousePainter",
+    "color": "#55418f",
+    "keyword": "house painters",
+    "services": [
+      "Interior Painting",
+      "Exterior Painting",
+      "Cabinet Refinishing",
+      "Drywall Repair",
+      "Deck & Fence Staining",
+      "Commercial Painting"
+    ]
+  },
+  "notes": "Trust-driven purchase — strangers inside the house for days. Reviews and a professional web presence carry more weight than price."
+}

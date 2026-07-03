@@ -1,5 +1,5 @@
 /**
- * Prints a live dashboard of all 3 project lead databases.
+ * Prints a live dashboard of every project's lead database.
  *
  * Usage:
  *   node scraper/status.js
@@ -11,7 +11,8 @@
 const fs   = require('fs');
 const path = require('path');
 
-const PROJECTS = ['auto-repair', 'roofers', 'electricians'];
+const { listProjects } = require('./automation/projects');
+const PROJECTS = listProjects();
 
 const args = process.argv.slice(2);
 const filterProject = args.includes('--project') ? args[args.indexOf('--project') + 1] : null;
@@ -48,7 +49,7 @@ function bar(n, total, width = 20) {
   return '[' + '█'.repeat(filled) + '░'.repeat(width - filled) + ']';
 }
 
-// ── Summary view (all 3 projects) ─────────────────────────────────────────────
+// ── Summary view (all projects) ────────────────────────────────────────────────
 function printSummary() {
   console.log(`\n${'═'.repeat(72)}`);
   console.log('  LEAD DATABASE STATUS');

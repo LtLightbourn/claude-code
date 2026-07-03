@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{BUSINESS_NAME}} | {{NICHE_LABEL}} in {{CITY}}, {{STATE}}</title>
+<meta name="description" content="{{BUSINESS_NAME}} provides trusted {{NICHE_LABEL_LOWER}} services in {{CITY}}, {{STATE}}. Call {{PHONE}} to schedule service.">
+<meta name="google-site-verification" content="{{GSC_VERIFICATION}}">
+<link rel="stylesheet" href="style.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "{{SCHEMA_TYPE}}",
+  "name": "{{BUSINESS_NAME}}",
+  "telephone": "{{PHONE}}",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "{{ADDRESS}}",
+    "addressLocality": "{{CITY}}",
+    "addressRegion": "{{STATE}}"
+  },
+  "openingHours": "{{HOURS}}",
+  "url": "https://{{DOMAIN}}"
+}
+</script>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a class="logo" href="#home">{{BUSINESS_NAME}}</a>
+    <nav>
+      <a href="#services">Services</a>
+      <a href="#about">About</a>
+      <a href="#area">Service Area</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <a class="call-btn" href="tel:{{PHONE}}">Call {{PHONE}}</a>
+  </div>
+</header>
+
+<section class="hero" id="home">
+  <div class="container">
+    <h1>{{BUSINESS_NAME}}</h1>
+    <p class="tagline">{{TAGLINE}}</p>
+    <div class="hero-actions">
+      <a class="btn-primary" href="tel:{{PHONE}}">Call {{PHONE}}</a>
+      <a class="btn-secondary" href="#contact">Request Service</a>
+    </div>
+    <p class="hero-meta">Serving {{CITY}}, {{STATE}} &middot; {{HOURS}}</p>
+  </div>
+</section>
+
+<section id="services">
+  <div class="container">
+    <h2>Services</h2>
+    <ul class="services-grid">
+      {{SERVICES_LIST}}
+    </ul>
+  </div>
+</section>
+
+<section id="about">
+  <div class="container about-block">
+    <h2>About {{BUSINESS_NAME}}</h2>
+    <p>{{BUSINESS_NAME}} has earned a strong reputation in {{CITY}} for honest, reliable work. We show up when we say we will, explain what's needed in plain terms, and stand behind every job.</p>
+  </div>
+</section>
+
+<section id="area">
+  <div class="container">
+    <h2>Service Area</h2>
+    <div class="area-block">
+      <p>Proudly serving {{CITY}}, {{STATE}} and the surrounding area.</p>
+      <p><strong>{{ADDRESS}}</strong></p>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="container">
+    <h2>Contact Us</h2>
+    <div class="contact-grid">
+      <div class="contact-info">
+        <p>Phone: <a href="tel:{{PHONE}}">{{PHONE}}</a></p>
+        <p>Address: {{ADDRESS}}</p>
+        <p>Hours: {{HOURS}}</p>
+      </div>
+      <form id="contact-form">
+        <input type="text" name="name" placeholder="Your name" required>
+        <input type="tel" name="phone" placeholder="Phone number" required>
+        <textarea name="message" placeholder="What do you need help with?" required></textarea>
+        <button type="submit">Send Request</button>
+        <p class="form-note">We typically respond within one business day.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    &copy; {{YEAR}} {{BUSINESS_NAME}}. All rights reserved.
+  </div>
+</footer>
+
+<script src="script.js"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id={{ANALYTICS_ID}}"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', '{{ANALYTICS_ID}}');
+</script>
+</body>
+</html>

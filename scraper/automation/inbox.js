@@ -34,8 +34,9 @@ let cfg;
 try { cfg = require('./config'); } catch { cfg = require('./config.template'); }
 
 const { loadLeads, saveLeads, markUnsubscribed } = require('./sequences');
+const { listProjects } = require('./projects');
 
-const PROJECTS = ['auto-repair', 'roofers', 'electricians'];
+const PROJECTS = listProjects();
 
 const UNSUB_PATTERNS = [
   /\bunsubscribe\b/i,

@@ -34,27 +34,10 @@ const fs   = require('fs');
 const path = require('path');
 
 const { loadLeads, saveLeads } = require('./automation/sequences');
+const { listProjects, loadProjectConfig } = require('./automation/projects');
 
 const CLIENTS_DIR          = path.join(__dirname, 'clients');
 const REPORT_CLIENTS_PATH  = path.join(__dirname, 'reports', 'clients.json');
-
-const NICHE_DEFAULTS = {
-  'auto-repair': {
-    services: ['Oil Changes', 'Brake Repair', 'Engine Diagnostics', 'Transmission Service', 'AC Repair', 'State Inspections'],
-    color:    '#1a3c5e',
-    keyword:  'auto repair',
-  },
-  'roofers': {
-    services: ['Roof Replacement', 'Roof Repair', 'Storm Damage Repair', 'Free Inspections', 'Gutter Installation', 'Insurance Claims Help'],
-    color:    '#7a2e2e',
-    keyword:  'roofing contractor',
-  },
-  'electricians': {
-    services: ['Panel Upgrades', 'Wiring & Rewiring', 'EV Charger Installation', 'Lighting Installation', 'Emergency Service', 'Safety Inspections'],
-    color:    '#8a6d1d',
-    keyword:  'electrician',
-  },
-};
 
 // ── CLI args ──────────────────────────────────────────────────────────────────
 const args = process.argv.slice(2);
@@ -66,8 +49,9 @@ function getArg(flag) {
 const project = getArg('--project');
 const find    = getArg('--find');
 
-if (!project || !find || !NICHE_DEFAULTS[project]) {
-  console.error('Usage: node scraper/onboard.js --project <auto-repair|roofers|electricians> --find <text> [--email ...] [--deploy]');
+if (!project || !find || !listProjects().includes(project)) {
+  console.error(`Usage: node scraper/onboard.js --project <slug> --find <text> [--email ...] [--deploy]`);
+  console.error(`Projects: ${listProjects().join(', ')}`);
   process.exit(1);
 }
 
@@ -104,10 +88,16 @@ const locParts = (lead.location || '').split(',').map(s => s.trim());
 const city  = locParts[0] || (lead.address || '').split(',').slice(-3, -2)[0]?.trim() || '';
 const state = locParts[1] || '';
 
-const defaults = NICHE_DEFAULTS[project];
-const projectConfig = JSON.parse(
-  fs.readFileSync(path.join(__dirname, 'projects', project, 'config.json'), 'utf8')
-);
+// Niche defaults come from the project's config.json `site` block — adding a
+// new industry needs no code changes here
+const projectConfig = loadProjectConfig(project);
+const site = projectConfig.site || {};
+const defaults = {
+  services:   site.services   || ['General Service', 'Repairs', 'Installations', 'Free Estimates'],
+  color:      site.color      || '#1a3c5e',
+  keyword:    site.keyword    || projectConfig.name.toLowerCase(),
+  schemaType: site.schemaType || 'LocalBusiness',
+};
 
 const email  = getArg('--email')  || lead.email || '';
 const domain = getArg('--domain') || '';
@@ -126,6 +116,8 @@ const clientConfig = {
   hours:        'Mon–Fri 8am–6pm',
   tagline:      getArg('--tagline') || `${city}'s trusted ${defaults.keyword} — call today for a free quote.`,
   colorPrimary: getArg('--color') || defaults.color,
+  schemaType:   defaults.schemaType,   // JSON-LD @type for local SEO
+  nicheLabel:   projectConfig.name,    // Human label for titles/meta
   analyticsId:     '',   // Fill in after creating the GA4 property
   gscVerification: '',   // Fill in after adding the site to Search Console
   email,

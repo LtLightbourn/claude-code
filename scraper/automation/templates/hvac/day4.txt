@@ -1,0 +1,13 @@
+Subject: Re: {{businessName}} — HVAC site
+
+Hi {{name}},
+
+Quick follow-up. HVAC search volume doubles in the hottest and coldest weeks of the year — exactly when homeowners can't wait and call the first company that looks legitimate online. That's the moment a website pays for itself.
+
+One website-sourced replacement at ${{avgJob}} covers the ${{monthly}}/month management for years. Repairs and tune-up bookings are on top of that.
+
+I take on one HVAC company per area so I'm never competing with my own work. The {{city}} spot is open if you want it.
+
+{{senderName}}
+{{senderPhone}}
+{{calendly}}
