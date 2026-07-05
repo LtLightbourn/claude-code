@@ -1,0 +1,14 @@
+Subject: {{businessName}} — Google search question
+
+Hi {{name}},
+
+Found {{businessName}} while looking at family law attorneys in {{city}} — {{reviews}} reviews, clearly a well-regarded practice.
+
+One thing stood out: no website. Family law searches happen in crisis moments — someone looking up "divorce lawyer near me" at 11pm hires whoever looks most credible online right then. Without a site, that search never turns into a call.
+
+I build and manage websites for family law firms — practice areas, attorney bios, a consultation request form, set up to rank for local searches, plus a dedicated tracking number and a monthly report on exactly what it's bringing in. ${{monthly}}/month, live within a week, nothing to pay upfront.
+
+Happy to put together a preview of what it would look like for {{businessName}}.
+
+{{senderName}}
+{{senderPhone}}

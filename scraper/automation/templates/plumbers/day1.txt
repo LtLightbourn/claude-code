@@ -1,0 +1,14 @@
+Subject: {{businessName}} — Google search question
+
+Hi {{name}},
+
+Found {{businessName}} while looking at plumbers in {{city}} — {{reviews}} reviews, clearly an established operation.
+
+One thing stood out: no website. Plumbing is the most urgent search there is. When a pipe bursts at 9pm, people search "plumber near me" and call the first result that looks credible. Right now those calls are going to whoever has a site.
+
+I build and manage websites for plumbers — services, emergency availability front and center, service area, review integration, plus a dedicated tracking number and a monthly report on exactly how many calls it brought in. ${{monthly}}/month, live within a week, nothing to pay upfront.
+
+Happy to put together a preview of what it would look like for {{businessName}}.
+
+{{senderName}}
+{{senderPhone}}

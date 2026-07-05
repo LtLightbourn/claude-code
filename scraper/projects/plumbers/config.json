@@ -1,0 +1,31 @@
+{
+  "name": "Plumbers",
+  "slug": "plumbers",
+  "keywords": [
+    "plumber",
+    "plumbing service",
+    "emergency plumber",
+    "drain cleaning",
+    "water heater repair"
+  ],
+  "pitch": {
+    "avgJobValue": 450,
+    "painPoint": "When a pipe bursts at 9pm, homeowners search 'plumber near me' and call the first result with a real website.",
+    "retainerMonthly": 200,
+    "setupFee": 0
+  },
+  "site": {
+    "schemaType": "Plumber",
+    "color": "#0e5a72",
+    "keyword": "plumber",
+    "services": [
+      "Drain Cleaning",
+      "Water Heater Repair & Installation",
+      "Leak Detection & Repair",
+      "Toilet & Faucet Repair",
+      "Sewer Line Service",
+      "Emergency Plumbing"
+    ]
+  },
+  "notes": "Highest-urgency searches of any trade — emergencies convert on the first credible result. Lead with the 9pm burst-pipe scenario, not SEO."
+}

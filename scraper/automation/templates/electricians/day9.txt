@@ -1,0 +1,9 @@
+Subject: Last note — {{businessName}}
+
+Hi {{name}},
+
+Last email from me. If it's not the right time or not a fit, completely understand — just reply and I'll leave you alone.
+
+If you ever want to pick this back up: {{senderPhone}}. ${{monthly}}/month, managed end to end, nothing upfront, cancel anytime.
+
+{{senderName}}

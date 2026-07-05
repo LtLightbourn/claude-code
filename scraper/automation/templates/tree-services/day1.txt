@@ -1,0 +1,14 @@
+Subject: {{businessName}} — Google search question
+
+Hi {{name}},
+
+Found {{businessName}} while looking at tree services in {{city}} — {{reviews}} reviews, clearly established.
+
+One thing stood out: no website. Tree work is urgent and high-stakes — after a storm, "tree removal near me" searches spike, and homeowners pick the company that looks insured, equipped, and professional. That impression is formed online before the first phone call.
+
+I build and manage websites for tree services — services, insurance and credentials front and center, service area, review integration, plus a dedicated tracking number and a monthly report on exactly how many calls it brought in. ${{monthly}}/month, live within a week, nothing to pay upfront.
+
+Happy to put together a preview of what it would look like for {{businessName}}.
+
+{{senderName}}
+{{senderPhone}}

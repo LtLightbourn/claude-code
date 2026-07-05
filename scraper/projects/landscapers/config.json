@@ -1,0 +1,31 @@
+{
+  "name": "Landscapers",
+  "slug": "landscapers",
+  "keywords": [
+    "landscaping company",
+    "landscaper",
+    "lawn care service",
+    "landscape design",
+    "lawn maintenance"
+  ],
+  "pitch": {
+    "avgJobValue": 3000,
+    "painPoint": "Homeowners hire landscapers off photos. No website means no portfolio — the job goes to whoever shows their work.",
+    "retainerMonthly": 200,
+    "setupFee": 0
+  },
+  "site": {
+    "schemaType": "LocalBusiness",
+    "color": "#2e6b34",
+    "keyword": "landscaping",
+    "services": [
+      "Landscape Design",
+      "Lawn Maintenance",
+      "Sod & Turf Installation",
+      "Irrigation Systems",
+      "Hardscaping & Patios",
+      "Tree & Shrub Care"
+    ]
+  },
+  "notes": "Visual trade — the before/after gallery IS the pitch. Recurring maintenance contracts make lifetime customer value high."
+}

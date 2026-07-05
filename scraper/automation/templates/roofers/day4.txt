@@ -1,0 +1,13 @@
+Subject: Re: {{businessName}} — roofing site
+
+Hi {{name}},
+
+Quick follow-up. Roofing is one of the highest-intent local searches there is — people searching "roof repair {{city}}" have an immediate problem and money to fix it. They click the first result with a real website.
+
+A roofing site I built in a similar market generated 4 inbound estimate requests in the first 60 days. At typical close rates that's 1–2 jobs — worth well over ${{avgJob}} combined, against ${{monthly}}/month to have it managed.
+
+I take on one roofer per area. The {{city}} spot is open if you want it.
+
+{{senderName}}
+{{senderPhone}}
+{{calendly}}

@@ -1,0 +1,13 @@
+Subject: Re: {{businessName}} — plumbing site
+
+Hi {{name}},
+
+Quick follow-up. The math on this one is simple: the average plumbing call runs around ${{avgJob}}, and emergency calls run well past that. One extra job a month from the website more than carries the ${{monthly}}/month it costs to have it managed.
+
+The plumbers who show up with a real site when someone searches "emergency plumber {{city}}" get the call — at 9pm, nobody scrolls past the first credible result.
+
+I take on one plumber per area so I'm never competing with my own work. The {{city}} spot is open if you want it.
+
+{{senderName}}
+{{senderPhone}}
+{{calendly}}

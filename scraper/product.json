@@ -1,0 +1,31 @@
+{
+  "name": "Local Visibility Plan",
+  "price": 200,
+  "setupFee": 0,
+  "billing": "Monthly, no contract, cancel anytime",
+  "positioning": "Premium managed service — priced and worded as professional work done for them, never as a discount or DIY tool.",
+  "includes": [
+    "Custom mobile-first website (Home, Services, About, Service Area, Contact)",
+    "Hosting, SSL, backups, uptime monitoring",
+    "Dedicated tracking phone number — every call is visible and reportable",
+    "Google Business Profile — active management, weekly posts, review responses within 48 hours, Q&A monitoring",
+    "Local SEO fundamentals — schema markup, meta optimization, sitemap submission",
+    "Monthly update window — hours, photos, services changed on request",
+    "Monthly report — calls received, form submissions, visitors, ranking movement"
+  ],
+  "reporting": {
+    "cadence": "monthly",
+    "cadenceReason": "Tied to the billing cycle, not a separate touchpoint. Weekly is too thin for small local businesses' traffic/call volume to show a meaningful trend, and reads as busywork rather than results.",
+    "metrics": [
+      { "name": "Calls received", "source": "Dedicated tracking number (Twilio)", "detail": "Total calls, answered vs. missed" },
+      { "name": "Form submissions", "source": "GA4 conversion event", "detail": "Contact form completions" },
+      { "name": "Visitors", "source": "GA4", "detail": "Unique users, mobile traffic %" },
+      { "name": "Ranking movement", "source": "Google Search Console", "detail": "Avg. position this month vs. last, per target keyword" }
+    ]
+  },
+  "languageRules": {
+    "avoid": ["affordable", "cheap", "save money", "deal", "discount", "$X cheaper than [competitor]", "limited time"],
+    "use": ["professional", "managed for you", "done for you", "handled", "results", "we manage"],
+    "priceFraming": "State $200/month as the fair price for managed, professional work. Never compare it to a competitor's price. The $0 setup fee is framed as removing risk, not as a discount."
+  }
+}

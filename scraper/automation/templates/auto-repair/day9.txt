@@ -1,0 +1,11 @@
+Subject: Last note — {{businessName}}
+
+Hi {{name}},
+
+Last email from me — don't want to clog your inbox.
+
+If the timing isn't right or you're not interested, completely understand. Just reply and I'll take you off my list.
+
+If you do want to move forward at some point, I'm at {{senderPhone}}. ${{monthly}}/month, managed end to end, nothing upfront, cancel anytime.
+
+{{senderName}}

@@ -1,0 +1,15 @@
+Subject: Re: {{businessName}}
+
+Hi {{name}},
+
+Following up from last week.
+
+One thing worth knowing: "electrician near me" is searched thousands of times a month in most cities, and Google prioritises results with a real website over bare Google Business listings. Right now you're visible but not clickable — a site fixes that.
+
+I've built sites for electricians in similar markets that started generating 3–6 inbound service requests per month within the first 60 days — well ahead of the ${{monthly}}/month it costs to have it managed.
+
+Happy to jump on a 15-minute call and show you what's possible.
+
+{{senderName}}
+{{senderPhone}}
+{{calendly}}

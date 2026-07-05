@@ -1,0 +1,9 @@
+Subject: Last one — {{businessName}}
+
+Hi {{name}},
+
+Last note. If the timing's off or it's not a fit, no problem at all — just say the word and I'll remove you.
+
+If you ever want to revisit: {{senderPhone}}. ${{monthly}}/month, managed end to end, nothing upfront, cancel anytime.
+
+{{senderName}}

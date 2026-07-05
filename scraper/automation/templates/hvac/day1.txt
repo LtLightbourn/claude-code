@@ -1,0 +1,14 @@
+Subject: {{businessName}} — Google search question
+
+Hi {{name}},
+
+Found {{businessName}} while looking at heating and cooling companies in {{city}} — {{reviews}} reviews, solid reputation.
+
+One thing stood out: no website. When an AC dies in July, homeowners search "ac repair near me" and call whoever shows up with a real site. And a system replacement runs around ${{avgJob}} — a single install sourced through a website covers years of the retainer.
+
+I build and manage websites for HVAC companies — services, seasonal offers, service area, review integration, plus a dedicated tracking number and a monthly report on exactly how many calls it brought in. ${{monthly}}/month, live within a week, nothing to pay upfront.
+
+Happy to put together a preview of what it would look like for {{businessName}}.
+
+{{senderName}}
+{{senderPhone}}

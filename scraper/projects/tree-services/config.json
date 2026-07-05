@@ -1,0 +1,31 @@
+{
+  "name": "Tree Services",
+  "slug": "tree-services",
+  "keywords": [
+    "tree service",
+    "tree removal",
+    "tree trimming",
+    "arborist",
+    "stump grinding"
+  ],
+  "pitch": {
+    "avgJobValue": 1200,
+    "painPoint": "After a storm, 'tree removal near me' searches spike — the companies with websites book solid while everyone else waits on word of mouth.",
+    "retainerMonthly": 200,
+    "setupFee": 0
+  },
+  "site": {
+    "schemaType": "LocalBusiness",
+    "color": "#3e5622",
+    "keyword": "tree service",
+    "services": [
+      "Tree Removal",
+      "Tree Trimming & Pruning",
+      "Stump Grinding",
+      "Storm Damage Cleanup",
+      "Land Clearing",
+      "Tree Health Assessments"
+    ]
+  },
+  "notes": "Storm-driven demand spikes. High perceived danger means homeowners want proof of insurance and professionalism — a real website signals both."
+}

@@ -1,0 +1,13 @@
+Subject: Re: {{businessName}} — tree service site
+
+Hi {{name}},
+
+Quick follow-up. Tree work has a trust hurdle most trades don't: homeowners are picturing a crew with chainsaws working over their roof. The companies that win those jobs are the ones whose credentials and insurance are visible online before the call.
+
+At around ${{avgJob}} per removal, one or two website-sourced jobs a year more than carries the ${{monthly}}/month it costs to have the whole thing managed — and storm weeks bring far more than that.
+
+I take on one tree service per area so I'm never competing with my own work. The {{city}} spot is open if you want it.
+
+{{senderName}}
+{{senderPhone}}
+{{calendly}}

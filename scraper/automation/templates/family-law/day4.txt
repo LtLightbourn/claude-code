@@ -1,0 +1,13 @@
+Subject: Re: {{businessName}} — family law site
+
+Hi {{name}},
+
+Quick follow-up. A retained family law case commonly runs well past ${{avgJob}} — one client sourced through the website covers over a year of the ${{monthly}}/month it costs to have the whole thing managed.
+
+And unlike most trades, this is a decision people research carefully before ever calling — they're comparing attorney bios and practice area pages, not just picking the first name they see. A credible site is what gets you into that comparison at all.
+
+I take on one family law firm per area so I'm never competing with my own work. The {{city}} spot is open if you want it.
+
+{{senderName}}
+{{senderPhone}}
+{{calendly}}
