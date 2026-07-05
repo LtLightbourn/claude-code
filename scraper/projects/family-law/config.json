@@ -1,0 +1,31 @@
+{
+  "name": "Family Law Attorneys",
+  "slug": "family-law",
+  "keywords": [
+    "family law attorney",
+    "divorce lawyer",
+    "family law firm",
+    "child custody lawyer",
+    "divorce attorney"
+  ],
+  "pitch": {
+    "avgJobValue": 3500,
+    "painPoint": "Family law is one of the most urgently-searched legal categories there is — someone searching 'divorce lawyer near me' at 11pm hires whoever looks most credible online in that moment.",
+    "retainerMonthly": 200,
+    "setupFee": 0
+  },
+  "site": {
+    "schemaType": "Attorney",
+    "color": "#25324d",
+    "keyword": "family law attorney",
+    "services": [
+      "Divorce",
+      "Child Custody & Support",
+      "Custody Modifications",
+      "Prenuptial Agreements",
+      "Adoption",
+      "Mediation"
+    ]
+  },
+  "notes": "High-trust, high-stakes purchase — people search in crisis, often at odd hours, and pick based on credibility signals (real site, clear practice areas, attorney bios) over price. Retainers commonly run well past the avg job value used here."
+}
