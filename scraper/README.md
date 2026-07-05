@@ -74,9 +74,23 @@ bash scraper/setup-cron.sh --hour 7    # different hour
 bash scraper/setup-cron.sh --remove    # uninstall
 ```
 
-Each daily run rotates through the cities in `config.js` → `locations`
-(one city per project per day), so the database grows across your whole
-region automatically. Logs land in `scraper/logs/`.
+Each daily run walks a non-repeating window through the cities in
+`config.js` → `locations.default` (every project shares the same day's
+city, so all 8 industries get scraped there together), so the database
+keeps expanding into new metros instead of re-scraping the same handful
+forever. The template ships with 138 US cities spanning every region —
+trim it to a region if you don't want nationwide coverage, or add a
+per-project override (e.g. `locations.roofers`) to point one industry
+somewhere else.
+
+Coverage speed is `scrape.citiesPerDay` in `config.js` (default 1 = one
+new metro/day). Raise it to work through the list faster — it multiplies
+daily Places API calls roughly linearly (8 projects × ~5 keywords ×
+citiesPerDay), so check usage in the GCP console before going high. At
+`citiesPerDay: 1` the full 138-city list takes 138 days to cycle once;
+at `5` it's ~28 days.
+
+Logs land in `scraper/logs/`.
 
 Or run it manually:
 

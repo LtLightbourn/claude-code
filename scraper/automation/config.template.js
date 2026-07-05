@@ -66,16 +66,74 @@ module.exports = {
   },
 
   // ── Scraping schedule ─────────────────────────────────────────────────────
-  // Cities the daily automation rotates through. `default` covers every
-  // project; add a project slug as a key to give one industry its own list.
+  // Cities the daily automation rotates through, one non-repeating window per
+  // day (size set by scrape.citiesPerDay below) until the list wraps around.
+  // `default` covers every project; add a project slug as a key to give one
+  // industry its own list instead (e.g. only scrape roofers in hail-prone
+  // metros). Trim this to a region if you don't want nationwide coverage.
   locations: {
-    default: ['Austin, TX', 'Round Rock, TX', 'Cedar Park, TX', 'Kyle, TX'],
-    // 'roofers': ['Dallas, TX', 'Fort Worth, TX'],
+    default: [
+      // Northeast
+      'New York, NY', 'Buffalo, NY', 'Rochester, NY', 'Albany, NY',
+      'Boston, MA', 'Worcester, MA', 'Springfield, MA',
+      'Providence, RI', 'Hartford, CT', 'New Haven, CT',
+      'Manchester, NH', 'Portland, ME',
+      'Newark, NJ', 'Jersey City, NJ', 'Trenton, NJ',
+      'Philadelphia, PA', 'Pittsburgh, PA', 'Allentown, PA', 'Erie, PA',
+      'Baltimore, MD',
+      // Southeast
+      'Washington, DC', 'Richmond, VA', 'Virginia Beach, VA', 'Norfolk, VA',
+      'Charlotte, NC', 'Raleigh, NC', 'Durham, NC', 'Greensboro, NC',
+      'Columbia, SC', 'Charleston, SC',
+      'Atlanta, GA', 'Savannah, GA', 'Augusta, GA',
+      'Jacksonville, FL', 'Miami, FL', 'Orlando, FL', 'Tampa, FL',
+      'St. Petersburg, FL', 'Tallahassee, FL', 'Fort Lauderdale, FL',
+      'Birmingham, AL', 'Montgomery, AL', 'Huntsville, AL', 'Jackson, MS',
+      'Nashville, TN', 'Memphis, TN', 'Knoxville, TN', 'Chattanooga, TN',
+      'Louisville, KY', 'Lexington, KY',
+      // Midwest
+      'Chicago, IL', 'Springfield, IL', 'Rockford, IL',
+      'Indianapolis, IN', 'Fort Wayne, IN',
+      'Columbus, OH', 'Cleveland, OH', 'Cincinnati, OH', 'Toledo, OH', 'Akron, OH',
+      'Detroit, MI', 'Grand Rapids, MI', 'Lansing, MI', 'Ann Arbor, MI',
+      'Milwaukee, WI', 'Madison, WI', 'Green Bay, WI',
+      'Minneapolis, MN', 'St. Paul, MN', 'Duluth, MN',
+      'Des Moines, IA', 'Cedar Rapids, IA',
+      'Omaha, NE', 'Lincoln, NE',
+      'Kansas City, MO', 'St. Louis, MO', 'Springfield, MO',
+      'Wichita, KS', 'Topeka, KS', 'Fargo, ND', 'Sioux Falls, SD',
+      // South Central
+      'Dallas, TX', 'Fort Worth, TX', 'Houston, TX', 'San Antonio, TX',
+      'Austin, TX', 'El Paso, TX', 'Arlington, TX', 'Corpus Christi, TX',
+      'Lubbock, TX', 'Amarillo, TX', 'Waco, TX', 'Round Rock, TX', 'Cedar Park, TX',
+      'Oklahoma City, OK', 'Tulsa, OK',
+      'Little Rock, AR', 'Shreveport, LA', 'New Orleans, LA', 'Baton Rouge, LA', 'Lafayette, LA',
+      // Mountain West
+      'Denver, CO', 'Colorado Springs, CO', 'Boulder, CO',
+      'Salt Lake City, UT', 'Provo, UT',
+      'Boise, ID', 'Billings, MT', 'Missoula, MT', 'Cheyenne, WY',
+      'Albuquerque, NM', 'Santa Fe, NM',
+      'Phoenix, AZ', 'Tucson, AZ', 'Mesa, AZ', 'Scottsdale, AZ',
+      'Las Vegas, NV', 'Reno, NV',
+      // West Coast
+      'Los Angeles, CA', 'San Diego, CA', 'San Jose, CA', 'San Francisco, CA',
+      'Sacramento, CA', 'Fresno, CA', 'Long Beach, CA', 'Oakland, CA',
+      'Bakersfield, CA', 'Anaheim, CA', 'Riverside, CA',
+      'Portland, OR', 'Eugene, OR', 'Salem, OR',
+      'Seattle, WA', 'Spokane, WA', 'Tacoma, WA', 'Vancouver, WA',
+      'Anchorage, AK', 'Honolulu, HI',
+    ],
+    // 'roofers': ['Dallas, TX', 'Fort Worth, TX'],  // override for one industry
   },
 
   scrape: {
-    radiusMetres:     6000,
-    rotateLocationsDays: 7, // Cycle through each city every 7 days
+    radiusMetres:  6000,
+    // Cities scraped per project per automate.js run. 1 = one new metro a
+    // day (slow, minimal API usage). Raise this to cover the list faster —
+    // it multiplies daily Places API calls roughly linearly (8 projects x
+    // ~5 keywords x citiesPerDay), so watch usage in the GCP console
+    // (Places API (New) free tier: $200/month credit) before going high.
+    citiesPerDay:  1,
   },
 
   // ── Cloudflare Pages deployment ───────────────────────────────────────────

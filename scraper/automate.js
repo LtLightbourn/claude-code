@@ -56,11 +56,22 @@ const timestamp = () => new Date().toISOString().replace('T', ' ').slice(0, 19);
 const log = (...args) => console.log(`[${timestamp()}]`, ...args);
 
 // ── Location rotation ─────────────────────────────────────────────────────────
-// Cycle through configured cities deterministically based on day of year
-function todaysLocation(projectSlug) {
+// Walks a non-repeating window through the configured city list each day, so
+// coverage keeps expanding into new metros instead of re-scraping the same
+// handful forever (dedup by placeId means re-scraping a city mostly just
+// burns API quota for no new leads). Window size is scrape.citiesPerDay —
+// raise it to work through a long/nationwide list faster.
+function todaysLocations(projectSlug) {
   const locations = cfg.locations?.[projectSlug] || cfg.locations?.default || ['Austin, TX'];
-  const dayOfYear = Math.floor((Date.now() - new Date(new Date().getFullYear(), 0, 0)) / 86_400_000);
-  return locations[dayOfYear % locations.length];
+  const perDay     = Math.max(1, cfg.scrape?.citiesPerDay ?? 1);
+  const dayOfYear  = Math.floor((Date.now() - new Date(new Date().getFullYear(), 0, 0)) / 86_400_000);
+  const startIdx   = (dayOfYear * perDay) % locations.length;
+
+  const picked = [];
+  for (let i = 0; i < Math.min(perDay, locations.length); i++) {
+    picked.push(locations[(startIdx + i) % locations.length]);
+  }
+  return picked;
 }
 
 // ── Step 0: Inbox (replies must be processed BEFORE sending follow-ups) ───────
@@ -82,18 +93,21 @@ async function runScrape() {
   log('─── STEP 1: Scraping new leads ───');
 
   for (const project of PROJECTS) {
-    const location = todaysLocation(project);
-    log(`  [${project}] Scraping: ${location}`);
+    const locations = todaysLocations(project);
 
-    if (DRY_RUN) { log('  [dry-run] skipped'); continue; }
+    for (const location of locations) {
+      log(`  [${project}] Scraping: ${location}`);
 
-    try {
-      execSync(
-        `node "${require('path').join(__dirname, 'scrape.js')}" --project "${project}" --location "${location}" --radius ${cfg.scrape?.radiusMetres || 6000}`,
-        { stdio: 'inherit', env: { ...process.env, GOOGLE_API_KEY: cfg.google?.placesApiKey || process.env.GOOGLE_API_KEY } }
-      );
-    } catch (err) {
-      log(`  [${project}] Scrape error: ${err.message}`);
+      if (DRY_RUN) { log('  [dry-run] skipped'); continue; }
+
+      try {
+        execSync(
+          `node "${require('path').join(__dirname, 'scrape.js')}" --project "${project}" --location "${location}" --radius ${cfg.scrape?.radiusMetres || 6000}`,
+          { stdio: 'inherit', env: { ...process.env, GOOGLE_API_KEY: cfg.google?.placesApiKey || process.env.GOOGLE_API_KEY } }
+        );
+      } catch (err) {
+        log(`  [${project}] Scrape error (${location}): ${err.message}`);
+      }
     }
   }
 }
