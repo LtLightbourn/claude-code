@@ -2,6 +2,13 @@
  * Multi-project Google Places scraper.
  * Reads a project config and appends new leads to that project's database.
  *
+ * Uses Places API (New) — Text Search — rather than the legacy Nearby
+ * Search/Place Details pair. Text Search (New) returns website URL, rating,
+ * phone, and maps link directly in the search response, so no per-place
+ * Details call is needed (fewer requests, faster runs). Requires "Places API
+ * (New)" enabled in the GCP project (the legacy "Places API" is a separate
+ * toggle and is NOT what this uses).
+ *
  * Usage:
  *   node scraper/scrape.js --project auto-repair --location "Austin, TX"
  *   node scraper/scrape.js --project roofers     --location "Denver, CO" --radius 8000
@@ -77,6 +84,31 @@ function get(url) {
   });
 }
 
+function postJson(url, payload, extraHeaders) {
+  return new Promise((resolve, reject) => {
+    const data = JSON.stringify(payload);
+    const req = https.request(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Content-Length': Buffer.byteLength(data),
+        'X-Goog-Api-Key': API_KEY,
+        ...extraHeaders,
+      },
+    }, res => {
+      let body = '';
+      res.on('data', c => (body += c));
+      res.on('end', () => {
+        try { resolve({ status: res.statusCode, data: JSON.parse(body || '{}') }); }
+        catch { reject(new Error(`JSON parse error: ${body.slice(0, 200)}`)); }
+      });
+    });
+    req.on('error', reject);
+    req.write(data);
+    req.end();
+  });
+}
+
 function toCsv(records) {
   const headers = [
     'name', 'types', 'address', 'phone', 'rating', 'reviews',
@@ -104,31 +136,48 @@ async function geocode(address) {
   return { lat, lng, formatted: data.results[0].formatted_address };
 }
 
-async function nearbySearch(lat, lng, keyword) {
+const SEARCH_URL  = 'https://places.googleapis.com/v1/places:searchText';
+const FIELD_MASK  = [
+  'places.id', 'places.displayName', 'places.formattedAddress',
+  'places.nationalPhoneNumber', 'places.internationalPhoneNumber',
+  'places.rating', 'places.userRatingCount', 'places.websiteUri',
+  'places.googleMapsUri', 'places.types', 'nextPageToken',
+].join(',');
+
+// Text Search (New) can keep returning a nextPageToken even as result counts
+// thin out — locationBias is a soft hint, not a hard filter, so a broad
+// keyword can paginate across a much wider area than intended. Cap pages
+// (matching the legacy API's 3-page/60-result ceiling) and stop once a page
+// adds nothing new, rather than trusting nextPageToken alone.
+const MAX_PAGES = 3;
+
+async function textSearch(lat, lng, keyword) {
   const places = [];
-  let url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${lat},${lng}&radius=${RADIUS}&keyword=${encodeURIComponent(keyword)}&key=${API_KEY}`;
+  let pageToken = null;
+  let page = 0;
 
-  while (url && places.length < LIMIT) {
-    const data = await get(url);
-    if (!['OK', 'ZERO_RESULTS'].includes(data.status))
-      throw new Error(`Nearby search: ${data.status} — ${data.error_message || ''}`);
-    places.push(...(data.results || []));
+  do {
+    const body = {
+      textQuery: keyword,
+      locationBias: { circle: { center: { latitude: lat, longitude: lng }, radius: RADIUS } },
+      pageSize: 20,
+      ...(pageToken ? { pageToken } : {}),
+    };
+    const { status, data } = await postJson(SEARCH_URL, body, { 'X-Goog-FieldMask': FIELD_MASK });
+    if (status !== 200)
+      throw new Error(`Text search: ${data.error?.status || status} — ${data.error?.message || ''}`);
 
-    if (data.next_page_token && places.length < LIMIT) {
-      await sleep(2000);
-      url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?pagetoken=${data.next_page_token}&key=${API_KEY}`;
-    } else {
-      url = null;
-    }
-  }
+    page++;
+    const gotThisPage = (data.places || []).length;
+    places.push(...(data.places || []));
+
+    pageToken = data.nextPageToken && gotThisPage > 0 && places.length < LIMIT && page < MAX_PAGES
+      ? data.nextPageToken
+      : null;
+    if (pageToken) await sleep(2000); // fresh page tokens take a moment to activate
+  } while (pageToken);
+
   return places.slice(0, LIMIT);
-}
-
-async function getDetails(placeId) {
-  const fields = 'name,formatted_address,formatted_phone_number,website,rating,user_ratings_total,types,place_id,url';
-  const url = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeId}&fields=${fields}&key=${API_KEY}`;
-  const data = await get(url);
-  return data.status === 'OK' ? data.result : null;
 }
 
 // ── Main ──────────────────────────────────────────────────────────────────────
@@ -157,7 +206,7 @@ async function getDetails(placeId) {
     process.stdout.write(`\nSearching: "${keyword}"...\n`);
     let places;
     try {
-      places = await nearbySearch(geo.lat, geo.lng, keyword);
+      places = await textSearch(geo.lat, geo.lng, keyword);
     } catch (err) {
       console.error(`  Search failed: ${err.message}`);
       continue;
@@ -167,41 +216,36 @@ async function getDetails(placeId) {
 
     for (let i = 0; i < places.length; i++) {
       const p = places[i];
-      if (existingIds.has(p.place_id)) {
-        process.stdout.write(`  [skip] Already in database: ${p.name}\n`);
+      const name = p.displayName?.text || '(unnamed)';
+
+      if (existingIds.has(p.id)) {
+        process.stdout.write(`  [skip] Already in database: ${name}\n`);
         continue;
       }
 
-      process.stdout.write(`  [${i + 1}/${places.length}] ${(p.name || '').slice(0, 55)}\r`);
+      process.stdout.write(`  [${i + 1}/${places.length}] ${name.slice(0, 55)}\r`);
 
-      let details;
-      try { details = await getDetails(p.place_id); }
-      catch { continue; }
-      if (!details) continue;
-
-      if (details.website) continue; // has a website — skip
+      if (p.websiteUri) continue; // has a website — skip
 
       const lead = {
-        name:           details.name || p.name,
-        types:          (details.types || []).filter(t => t !== 'point_of_interest' && t !== 'establishment').slice(0, 3).join(', '),
-        address:        details.formatted_address || p.vicinity || '',
-        phone:          details.formatted_phone_number || '',
-        rating:         details.rating ?? '',
-        reviews:        details.user_ratings_total ?? 0,
-        mapsUrl:        details.url || `https://www.google.com/maps/place/?q=place_id:${p.place_id}`,
-        placeId:        p.place_id,
+        name,
+        types:          (p.types || []).filter(t => t !== 'point_of_interest' && t !== 'establishment').slice(0, 3).join(', '),
+        address:        p.formattedAddress || '',
+        phone:          p.nationalPhoneNumber || p.internationalPhoneNumber || '',
+        rating:         p.rating ?? '',
+        reviews:        p.userRatingCount ?? 0,
+        mapsUrl:        p.googleMapsUri || `https://www.google.com/maps/place/?q=place_id:${p.id}`,
+        placeId:        p.id,
         location:       LOCATION,
         keyword,
         scrapedAt,
-        outreachStatus: 'new',   // new | emailed | called | replied | closed | not-interested
+        outreachStatus: 'new',   // new | emailed-d1/d4/d9 | replied | closed | not-interested | ...
         notes:          '',
       };
 
       newLeads.push(lead);
-      existingIds.add(p.place_id);
+      existingIds.add(p.id);
       process.stdout.write(`  ✓ ${lead.name.slice(0, 50).padEnd(50)} (${newLeads.length} new)\n`);
-
-      await sleep(120); // Places API rate limit
     }
   }
 
